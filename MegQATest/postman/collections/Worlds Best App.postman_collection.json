@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "e4b0529f-b037-4cb9-96e6-1bc7e81a56ef",
+		"name": "Worlds Best App",
+		"description": "API tests for the worlds best app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5da03b8-9fc9-483f-a464-d77aef4ff3b3",
+						"exec": [
+							"pm.test(\"the username is returned\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.username).to.eql('Dr I Test');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7b5f9473-0ce5-4f72-93c2-6ba34718918c",
+						"exec": [
+							"pm.environment.set(\"base_url\", \"https://sprinkle-burn.glitch.me\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@drugdev.com\",\n\t\"password\": \"supers3cret\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Create succesfully login request"
+			},
+			"response": [
+				{
+					"name": "Login Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test@drugdev.com\",\n\t\"password\": \"supers3cret\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 09 Jul 2019 20:52:33 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "33"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"21-TyiGGXiDHoUPp/X3qOaynyeFwE4\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"username\": \"Dr I Test\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Login Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba24cfa5-4ee3-4b4d-8ae6-b6d7517e6948",
+						"exec": [
+							"pm.test(\"return an array of errors\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(pm.response.statusCode).to.eql(401)",
+							"    pm.expect(jsonData.error).to.eql('Dr I Test');",
+							"});",
+							"",
+							"pm.test(\"return an first error title is 'Credentials are incorrect' \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error[0].title).to.eql('Dr I Test');",
+							"});",
+							"",
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a908f5c5-b878-4ea2-9648-99456365238a",
+						"exec": [
+							"pm.environment.set(\"base_url\", \"https://sprinkle-burn.glitch.me/\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"incorrect@username.com\",\n\t\"password\": \"incorrectpassword\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Create error login request"
+			},
+			"response": [
+				{
+					"name": "Login Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"incorrect@username.com\",\n\t\"password\": \"incorrectpassword\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 09 Jul 2019 20:53:55 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "50"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						}
+					],
+					"cookie": [],
+					"body": "{\"errors\":[{\"title\":\"Credentials are incorrect\"}]}"
+				}
+			]
+		},
+		{
+			"name": "Login with missing username",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c4d00536-f4e3-4378-a6a9-1c9b1dd312c2",
+						"exec": [
+							"pm.environment.set(\"base_url\", \"https://sprinkle-burn.glitch.me/\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"\",\n\t\"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login with missing username",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"\",\n\t\"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 09 Jul 2019 20:59:01 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "50"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						}
+					],
+					"cookie": [],
+					"body": "{\"errors\":[{\"title\":\"Credentials are incorrect\"}]}"
+				},
+				{
+					"name": "Login with missing username",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"\",\n\t\"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 09 Jul 2019 20:59:01 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "50"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						}
+					],
+					"cookie": [],
+					"body": "{\"errors\":[{\"title\":\"Credentials are incorrect\"}]}"
+				}
+			]
+		},
+		{
+			"name": "Login with missing password",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c4d00536-f4e3-4378-a6a9-1c9b1dd312c2",
+						"exec": [
+							"pm.environment.set(\"base_url\", \"https://sprinkle-burn.glitch.me/\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"incorrect@username.com\",\n\t\"password\": \"\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
